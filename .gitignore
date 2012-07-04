@@ -1,0 +1,4 @@
+#Ignore all .project .classpath .settings files / directories to prevent committing eclipse project information.
+.classpath
+.project
+.settings
