@@ -39,4 +39,9 @@ public class OneTimePadTest {
         fail("Not yet implemented");
     }
 
+    @Test
+    public void testXoringCipherTexts(){
+        fail("Not yet implemented");
+    }
+
 }
