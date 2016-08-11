@@ -1,0 +1,77 @@
+package com.alexander.examples.design.datastructures;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Created by alexander on 10/08/16.
+ */
+public class Tree<T> {
+
+    private T data;
+    private Tree<T> parent;
+    private List<Tree<T>> children = new LinkedList<Tree<T>>();
+
+    /* Add internal method to calculate depth of tree as elements are added?
+    * This would move up the tree until the null / root element and compare to the current max depth and replace it if neccessary.
+    * The other option would be calculate on demand from the root element down to every leaf node, requiring a complete traversal of the tree.
+    * */
+
+    public Tree (T data){
+        this(data, null);
+    }
+
+    private Tree (T data, Tree<T> parent){
+        this.parent = parent;
+        this.data = data;
+    }
+
+
+    public T getData(){
+        return this.data;
+    }
+
+    public Tree<T> getParent(){
+        return this.parent;
+    }
+
+    public List<Tree<T>> getChildren() { return this.children; }
+
+    public Tree<T> addChild(T childValue){
+        Tree<T> child = new Tree<T>(childValue, this);
+        children.add(child);
+        return child;
+    }
+
+    public Tree<T> addSibling(T siblingValue){
+        Tree<T> parent = getParent();
+        if (parent == null){
+            throw new UnsupportedOperationException("Cannot add a sibling to a root element");
+        }
+        return parent.addChild(siblingValue);
+    }
+
+    public Tree<T> addAncestorSibling(T data){
+        return addAncestorSibling(data, 1);
+    }
+
+    public Tree<T> addAncestorSibling(T data, int depth){
+        Tree current = this.getParent();
+        if (current == null){
+            throw new UnsupportedOperationException("Cannot add a sibling to a root element");
+        }
+        for (int i = 0; i < depth; i++){
+            current = current.getParent();
+            if (current == null){
+                throw new UnsupportedOperationException("Not enough ancestors, requested "+depth+" reached root ancestor node after "+i);
+            }
+        }
+        return current.addChild(data);
+    }
+
+    public String toString(){return "Tree";}
+    public boolean equals(Tree<T> t){return false;}
+    public int hashCode(){return -1;}
+
+}
