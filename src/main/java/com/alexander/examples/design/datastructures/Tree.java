@@ -1,5 +1,7 @@
 package com.alexander.examples.design.datastructures;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,8 +72,35 @@ public class Tree<T> {
         return current.addChild(data);
     }
 
-    public String toString(){return "Tree";}
-    public boolean equals(Tree<T> t){return false;}
+    public String toString(){
+        ToStringBuilder builder = new ToStringBuilder(this);
+        builder.append("NodeValue", this.data);
+
+        return "Tree";
+    }
+
+    public boolean equals(Object o){
+        if (o == null) {
+            return false;
+        }
+        if ( o.getClass() != Tree.class ){
+            return false;
+        }
+        Tree t = (Tree)o;
+        if (this.data != t.getData()){
+            return false;
+        }
+        if (this.children.size() != t.getChildren().size()){
+            return false;
+        }
+        boolean childrenEquals = true;
+        for (int i = 0; i < this.children.size() && childrenEquals; i++){
+            if (!this.children.get(i).equals(t.getChildren().get(i))){
+                childrenEquals = false;
+            }
+        }
+        return childrenEquals;
+    }
     public int hashCode(){return -1;}
 
 }
