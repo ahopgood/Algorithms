@@ -1,6 +1,8 @@
 package com.alexander.examples.design.datastructures;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -73,10 +75,16 @@ public class Tree<T> {
     }
 
     public String toString(){
-        ToStringBuilder builder = new ToStringBuilder(this);
-        builder.append("NodeValue", this.data);
-
-        return "Tree";
+        ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        if (this.parent == null){
+            builder.append("RootNode",this.data);
+        } else {
+            builder.append("NodeValue", this.data);
+        }
+        for (int i = 0; i < this.children.size(); i++){
+            builder.append(this.children.get(i).toString());
+        }
+        return builder.toString();
     }
 
     public boolean equals(Object o){
@@ -101,6 +109,13 @@ public class Tree<T> {
         }
         return childrenEquals;
     }
-    public int hashCode(){return -1;}
+    public int hashCode(){
+        HashCodeBuilder builder = new HashCodeBuilder();
+        builder.append(this.data);
+        for (int i = 0; i < this.children.size(); i++){
+            builder.append(this.children.get(i).hashCode());
+        }
+        return builder.toHashCode();
+    }
 
 }

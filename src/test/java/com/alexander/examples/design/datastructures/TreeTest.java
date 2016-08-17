@@ -277,5 +277,40 @@ public class TreeTest {
         assertEquals(false, root.equals(other));
     }
 
+    @Test
+    public void testToString(){
+        String toString = this.root.toString();
+        String expected = "Tree[RootNode=1,Tree[NodeValue=2,Tree[NodeValue=3]],Tree[NodeValue=4]]";
+        assertEquals(expected, toString);
+    }
 
+    @Test
+    public void testToString_givenNullElements(){
+        Tree<Integer> root = new Tree<Integer>(1);
+        root
+                .addChild(null).addChild(3)
+                .addAncestorSibling(null);
+        String toString = root.toString();
+        String expected = "Tree[RootNode=1,Tree[NodeValue=null,Tree[NodeValue=3]],Tree[NodeValue=null]]";
+        assertEquals(expected, toString);
+    }
+
+    @Test
+    public void testHashCode_sameObject(){
+        assertEquals(root.hashCode(), root.hashCode());
+    }
+
+    @Test
+    public void testHashCode_equalObjects(){
+        Tree<Integer> otherRoot = new Tree<Integer>(1);
+        otherRoot
+                .addChild(2).addChild(3)
+                .addAncestorSibling(4);
+        assertEquals(root.hashCode(), otherRoot.hashCode());
+    }
+
+    @Test
+    public void testHashCode_givenUnequalTrees(){
+        assertEquals(false, root.hashCode() == other.hashCode());
+    }
 }
