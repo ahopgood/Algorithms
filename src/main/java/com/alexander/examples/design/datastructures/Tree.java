@@ -4,7 +4,6 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -91,11 +90,14 @@ public class Tree<T> {
         if (o == null) {
             return false;
         }
+        if (this == o){
+            return true;
+        }
         if ( o.getClass() != Tree.class ){
             return false;
         }
         Tree t = (Tree)o;
-        if (this.data != t.getData()){
+        if (!this.data.equals(t.getData())){
             return false;
         }
         if (this.children.size() != t.getChildren().size()){

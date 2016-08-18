@@ -3,6 +3,7 @@ package com.alexander.examples.design.datastructures;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.alexander.examples.design.datastructures.TreeAssert.assertTreeEquals;
 import static org.junit.Assert.*;
 
 /**
@@ -249,6 +250,21 @@ public class TreeTest {
     }
 
     @Test
+    public void testEquals_givenMatchingChildren_andObjects(){
+        Tree<String> root = new Tree<String>("1");
+        root
+                .addChild("2").addChild("3")
+                .addAncestorSibling("4");
+
+        Tree<String> other = new Tree<String>("1");
+        other
+                .addChild("2").addChild("3")
+                .addAncestorSibling("4");
+
+        assertEquals(true, root.equals(other));
+    }
+
+    @Test
     public void testEquals_givenDifferentChildren(){
         Tree<Integer> root = new Tree<Integer>(1);
         root
@@ -291,7 +307,7 @@ public class TreeTest {
                 .addChild(null).addChild(3)
                 .addAncestorSibling(null);
         String toString = root.toString();
-        String expected = "Tree[RootNode=1,Tree[NodeValue=null,Tree[NodeValue=3]],Tree[NodeValue=null]]";
+        String expected = "Tree[RootNode=1,Tree[NodeValue=<null>,Tree[NodeValue=3]],Tree[NodeValue=<null>]]";
         assertEquals(expected, toString);
     }
 
@@ -312,5 +328,6 @@ public class TreeTest {
     @Test
     public void testHashCode_givenUnequalTrees(){
         assertEquals(false, root.hashCode() == other.hashCode());
+        assertTreeEquals(root, root);
     }
 }
