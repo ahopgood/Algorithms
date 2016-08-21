@@ -74,14 +74,18 @@ public class Tree<T> {
     }
 
     public boolean contains(Tree<T> contents){
+        return contains(contents, true);
+    }
+
+    public boolean contains(Tree<T> contents, boolean isDepthFirstMatch){
         boolean match = false;
         //Check current node for a match
         if (this.getData() == contents.getData()){
             match = true;
             //Move into comparing the children of the contents
-            if (this.getChildren().size() >= contents.getChildren().size()) {
+            if (doChildrenMatch(contents, isDepthFirstMatch)) {
                 for (int i = 0; i < contents.getChildren().size(); i++) {
-                    if (!this.getChildren().get(i).contains(contents.getChildren().get(i))){
+                    if (!this.getChildren().get(i).contains(contents.getChildren().get(i), isDepthFirstMatch)){
                         match = false;
                     }
                 }
@@ -91,7 +95,7 @@ public class Tree<T> {
         } else {
             //Try comparing to the children of this node
             for (int i = 0; i < this.getChildren().size(); i++){
-                if (this.getChildren().get(i).contains(contents)){
+                if (this.getChildren().get(i).contains(contents, isDepthFirstMatch)){
                     match = true;
                 }
             }
@@ -99,6 +103,13 @@ public class Tree<T> {
         return match;
     }
 
+    public boolean doChildrenMatch(Tree<T> contents, boolean isDepthFirstMatch){
+        if (isDepthFirstMatch){
+            return (this.getChildren().size() >= contents.getChildren().size());
+        } else {
+            return (this.getChildren().size() == contents.getChildren().size());
+        }
+    }
 
     public String toString(){
         ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);

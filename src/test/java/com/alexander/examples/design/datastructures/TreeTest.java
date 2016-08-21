@@ -322,6 +322,25 @@ public class TreeTest {
      *   - 4
      *
      * Sub tree
+     * 1 - 2 - 3
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_partialSubTree_depthFirst_givenDepthFirstBoolFalse(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents
+                .addChild(2).addChild(3);
+
+        assertEquals(false, root.contains(contents, false));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
      * 1 - 2 - 2
      */
     @Test
