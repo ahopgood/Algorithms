@@ -73,6 +73,33 @@ public class Tree<T> {
         return current.addChild(data);
     }
 
+    public boolean contains(Tree<T> contents){
+        boolean match = false;
+        //Check current node for a match
+        if (this.getData() == contents.getData()){
+            match = true;
+            //Move into comparing the children of the contents
+            if (this.getChildren().size() >= contents.getChildren().size()) {
+                for (int i = 0; i < contents.getChildren().size(); i++) {
+                    if (!this.getChildren().get(i).contains(contents.getChildren().get(i))){
+                        match = false;
+                    }
+                }
+            } else {
+                match = false;
+            }
+        } else {
+            //Try comparing to the children of this node
+            for (int i = 0; i < this.getChildren().size(); i++){
+                if (this.getChildren().get(i).contains(contents)){
+                    match = true;
+                }
+            }
+        }
+        return match;
+    }
+
+
     public String toString(){
         ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
         if (this.parent == null){

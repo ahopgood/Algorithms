@@ -2,6 +2,7 @@ package com.alexander.examples.design.datastructures;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static com.alexander.examples.design.datastructures.TreeAssert.assertTreeEquals;
 import static org.junit.Assert.*;
@@ -176,6 +177,223 @@ public class TreeTest {
         assertEquals(1, root.getChildren().size());
         assertEquals(2, root.getChildren().get(0).getChildren().size());
     }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 1
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_singleNodeSubTree_matchesRootNode(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+
+        assertEquals(true, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 2
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_singleNodeSubTree_matchesChildNode(){
+        Tree<Integer> contents = new Tree<Integer>(2);
+
+        assertEquals(true, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 5
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_singleNodeSubTree_notWithinTree(){
+        Tree<Integer> contents = new Tree<Integer>(5);
+
+        assertEquals(false, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 1 - 2
+     *   |
+     *   - 4
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_partialSubTree_breadthFirst(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents
+                .addChild(2)
+                .addSibling(4);
+
+        assertEquals(true, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 1 - 2
+     *   |
+     *   - 5
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_partialSubTree_breadthFirst_doesNotMatch(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents
+                .addChild(2)
+                .addSibling(5);
+
+        assertEquals(false, root.contains(contents));
+    }
+
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 5 - 2
+     *   |
+     *   - 4
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_partialSubTree_breadthFirst_rootDoesNotMatch(){
+        Tree<Integer> contents = new Tree<Integer>(5);
+        contents
+                .addChild(2)
+                .addSibling(4);
+
+        assertEquals(false, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 1 - 2 - 3
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_partialSubTree_depthFirst(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents
+                .addChild(2).addChild(3);
+
+        assertEquals(true, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 1 - 2 - 2
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_partialSubTree_depthFirst_doesNotMatch(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents
+                .addChild(2).addChild(2);
+
+        assertEquals(false, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 2 - 3
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_detatchedSubTree(){
+        Tree<Integer> contents = new Tree<Integer>(2);
+        contents
+                .addChild(3);
+
+        assertEquals(true, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 2 - 2
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_detatchedSubTree_doesNotMatch(){
+        Tree<Integer> contents = new Tree<Integer>(2);
+        contents
+                .addChild(2);
+
+        assertEquals(false, root.contains(contents));
+    }
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_fullTree(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents
+                .addChild(2).addChild(3)
+                .addAncestorSibling(4);
+
+        assertEquals(true, root.contains(contents));
+    }
+
 
     //How to manage comparison when you are handed a child from the middle of a tree?
 
