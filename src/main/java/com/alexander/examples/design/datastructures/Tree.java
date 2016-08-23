@@ -41,6 +41,27 @@ public class Tree<T> {
 
     public List<Tree<T>> getChildren() { return this.children; }
 
+    public Tree<T> getAncestor(){
+        return getAncestor(1);
+    }
+
+    public Tree<T> getAncestor(Integer depth){
+        Tree current = this.getParent();
+        if (current == null){
+            throw new UnsupportedOperationException("Cannot get ancestor for a root element");
+        }
+        if (depth == null || depth < 0){
+            throw new UnsupportedOperationException("Cannot find an ancestors for a negative node depth, requested depth of "+depth);
+        }
+        for (int i = 0; i < depth; i++){
+            current = current.getParent();
+            if (current == null){
+                throw new UnsupportedOperationException("Not enough ancestors, requested "+depth+" reached root ancestor node after "+i);
+            }
+        }
+        return current;
+    }
+
     public Tree<T> addChild(T childValue){
         Tree<T> child = new Tree<T>(childValue, this);
         children.add(child);
@@ -113,6 +134,19 @@ public class Tree<T> {
 
     public String toString(){
         ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        if (this.parent == null){
+            builder.append("RootNode",this.data);
+        } else {
+            builder.append("NodeValue", this.data);
+        }
+        for (int i = 0; i < this.children.size(); i++){
+            builder.append(this.children.get(i).toString());
+        }
+        return builder.toString();
+    }
+
+    public String toStringFormatted(){
+        ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE);
         if (this.parent == null){
             builder.append("RootNode",this.data);
         } else {

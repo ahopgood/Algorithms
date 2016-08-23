@@ -178,6 +178,64 @@ public class TreeTest {
         assertEquals(2, root.getChildren().get(0).getChildren().size());
     }
 
+    //GetAncestor tests
+    @Test (expected=UnsupportedOperationException.class)
+    @Category(GetAncestorSuite.GetAncestor.class)
+    public void getAncestor_givenRoot(){
+        //Verify we are at the childiest child
+        Tree grandParent = new Tree<Integer>(1);
+        grandParent.getAncestor();
+    }
+
+    @Test (expected=UnsupportedOperationException.class)
+    @Category(GetAncestorSuite.GetAncestor.class)
+    public void getAncestor_given2GenTree(){
+        //Verify we are at the childiest child
+        Tree grandParent = new Tree<Integer>(1);
+        grandParent.addChild(2).getAncestor();
+    }
+
+    @Test
+    @Category(GetAncestorSuite.GetAncestor.class)
+    public void getAncestor_given3GenTree(){
+        //Verify we are at the childiest child
+        Tree grandChild = root.getChildren().get(0).getChildren().get(0);
+        assertEquals(3, grandChild.getData());
+        Tree grandParent = grandChild.getAncestor();
+        assertEquals(1, grandParent.getData());
+    }
+
+    @Test
+    @Category(GetAncestorSuite.GetAncestor.class)
+    public void getAncestor_givenZeroDepth(){
+        Tree grandChild = root.getChildren().get(0).getChildren().get(0);
+        //Will get the parent
+        assertEquals(2, grandChild.getAncestor(0).getData());
+    }
+
+    @Test
+    @Category(GetAncestorSuite.GetAncestor.class)
+    public void getAncestor_givenDepthOfOne(){
+        Tree grandChild = root.getChildren().get(0).getChildren().get(0);
+        assertEquals(1, grandChild.getAncestor().getData());
+    }
+
+    @Test (expected=UnsupportedOperationException.class)
+    @Category(GetAncestorSuite.GetAncestor.class)
+    public void getAncestor_givenNegativeDepth(){
+        Tree grandChild = root.getChildren().get(0).getChildren().get(0);
+        grandChild.getAncestor(-1);
+    }
+
+    @Test (expected=UnsupportedOperationException.class)
+    @Category(GetAncestorSuite.GetAncestor.class)
+    public void getAncestor_givenNullDepth(){
+        Tree grandChild = root.getChildren().get(0).getChildren().get(0);
+        Integer nullInt = null;
+        grandChild.getAncestor(nullInt);
+    }
+
+    //Contains tests
     /**
      * Full tree
      * 1 - 2 - 3
