@@ -101,7 +101,7 @@ public class Tree<T> {
     public boolean contains(Tree<T> contents, boolean isDepthFirstMatch){
         boolean match = false;
         //Check current node for a match
-        if (this.getData() == contents.getData()){
+        if (this.getData().equals(contents.getData())){
             match = true;
             //Move into comparing the children of the contents
             if (doChildrenMatch(contents, isDepthFirstMatch)) {
@@ -170,7 +170,7 @@ public class Tree<T> {
         }
         Tree t = (Tree)o;
         if (!this.data.equals(t.getData())){
-            return false;
+                return false;
         }
         if (this.children.size() != t.getChildren().size()){
             return false;

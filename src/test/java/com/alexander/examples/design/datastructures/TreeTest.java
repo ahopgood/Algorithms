@@ -260,6 +260,24 @@ public class TreeTest {
      *   - 4
      *
      * Sub tree
+     * 1
+     */
+    @Test
+    @Category(ContainsSuite.Contains.class)
+    public void contains_singleNodeSubTree_matchesRootNode_givenNonPrimitiveValues(){
+        Tree<String> root = new Tree<String>(new String("1"));
+        Tree<String> contents = new Tree<String>(new String("1"));
+        assertEquals(true, root.contains(contents));
+    }
+
+
+    /**
+     * Full tree
+     * 1 - 2 - 3
+     *   |
+     *   - 4
+     *
+     * Sub tree
      * 2
      */
     @Test
@@ -475,6 +493,7 @@ public class TreeTest {
     //How to manage comparison when you are handed a child from the middle of a tree?
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_isReflective(){
         Tree<Integer> root = new Tree<Integer>(1);
 
@@ -482,6 +501,7 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_isTransitive(){
         Tree<Integer> x = new Tree<Integer>(1);
         Tree<Integer> y = new Tree<Integer>(1);
@@ -495,6 +515,7 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_isConsistent(){
         Tree<Integer> root = new Tree<Integer>(1);
 
@@ -504,18 +525,21 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenNull(){
         Tree<Integer> root = new Tree<Integer>(1);
         assertEquals(false, root.equals(null));
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenOtherClass(){
         Tree<Integer> root = new Tree<Integer>(1);
         assertEquals(false, root.equals(new Integer(1)));
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenMatchingRootOnly(){
         Tree<Integer> root = new Tree<Integer>(1);
         Tree<Integer> other = new Tree<Integer>(1);
@@ -523,6 +547,15 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
+    public void testEquals_givenMatchingRootOnly_nonPrimitive(){
+        Tree<String> root = new Tree<>(new String("1"));
+        Tree<String> other = new Tree<>(new String("1"));
+        assertEquals(true, root.equals(other));
+    }
+
+    @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenDifferentRootOnly(){
         Tree<Integer> root = new Tree<Integer>(1);
         Tree<Integer> other = new Tree<Integer>(2);
@@ -530,6 +563,7 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenMatchingChildren(){
         Tree<Integer> root = new Tree<Integer>(1);
         root
@@ -545,6 +579,7 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenMatchingChildren_andObjects(){
         Tree<String> root = new Tree<String>("1");
         root
@@ -560,6 +595,7 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenDifferentChildren(){
         Tree<Integer> root = new Tree<Integer>(1);
         root
@@ -575,6 +611,7 @@ public class TreeTest {
     }
 
     @Test
+    @Category(EqualsSuite.Equals.class)
     public void testEquals_givenDifferentNumberOfChildren(){
         Tree<Integer> root = new Tree<Integer>(1);
         root
