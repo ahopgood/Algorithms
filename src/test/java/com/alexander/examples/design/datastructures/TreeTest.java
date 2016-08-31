@@ -662,4 +662,47 @@ public class TreeTest {
         assertEquals(false, root.hashCode() == other.hashCode());
         assertTreeEquals(root, root);
     }
+
+    @Test
+    public void testDoChildrentMatch_givenDepthFirst_lessChildren_thenTrue(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents.addChild(2);
+        assertEquals(true, root.doChildrenMatch(contents, true));
+    }
+
+    @Test
+    public void testDoChildrentMatch_givenDepthFirst_equalChildren_thenTrue(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents.addChild(2).addSibling(3);
+        assertEquals(true, root.doChildrenMatch(contents, true));
+    }
+
+    @Test
+    public void testDoChildrentMatch_givenDepthFirst_greaterChildren_thenFalse(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents.addChild(2).addSibling(3).addSibling(4);
+        assertEquals(false, root.doChildrenMatch(contents, true));
+    }
+
+    @Test
+    public void testDoChildrentMatch_givenBreadthFirst_lessChildren_returnFalse(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents.addChild(2);
+        assertEquals(false, root.doChildrenMatch(contents, false));
+    }
+
+    @Test
+    public void testDoChildrentMatch_givenBreadthFirst_equalChildren_returnTrue(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents.addChild(2).addSibling(3);
+        assertEquals(true, root.doChildrenMatch(contents, false));
+    }
+
+    @Test
+    public void testDoChildrentMatch_givenBreadthFirst_greaterChildren_returnFalse(){
+        Tree<Integer> contents = new Tree<Integer>(1);
+        contents.addChild(2).addSibling(3).addSibling(4);
+        assertEquals(false, root.doChildrenMatch(contents, false));
+    }
+
 }
